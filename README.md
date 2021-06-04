@@ -1,4 +1,4 @@
-# MTEEBot Trade Execution Engine (MTEEBot TEE)
+# MTEEBot Modular Trade Execution Engine (MTEEBot TEE)
  
                                                               
 It will listen to Twitter signals from:                
