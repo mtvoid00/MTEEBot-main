@@ -71,6 +71,7 @@ This setup will only follow (and trade) "SwingBot Large Caps" (@r_scalp):
         followUsers: [
             { name: "@r_scalp", id: "1379234944652697600" },
             // { name: "@SwingBot_Small", id: "1388217130709962753" },
+            // { name: "@TipperBeats", id: "1385168716258742272" },
         ]
     }
 }
