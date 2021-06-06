@@ -2,7 +2,9 @@ import { TwitterSB } from "./engine/twitter";
 import { MTEEBotSettings } from "./settings";
 import { AlpacaSB } from "./engine/alpaca";
 import { MTEEBotUtils } from "./engine/MTEEBot";
-import { testTweet } from "./engine/testing";
+import { testTweetTSLong, testTweetSB, testTweetTSShort } from "./engine/testing";
+
+MTEEBotUtils.logWelcomeMessage();
 
 // create new instance of Twitter Client for the MTEE Bot
 const twitterSB = new TwitterSB(MTEEBotSettings);
@@ -31,7 +33,7 @@ function onTweetReceived(tweet) {
     }
 }
 
-MTEEBotUtils.logWelcomeMessage();
+//MTEEBotUtils.logWelcomeMessage();
 twitterSB.startListening((tweet) => onTweetReceived(tweet))
 
 
@@ -40,11 +42,25 @@ twitterSB.startListening((tweet) => onTweetReceived(tweet))
  **/
 
 /* TEST 1) parse test tweet to turn it into a signal */
-//console.log('Test Signal:', MTEEBotUtils.getSignal(testTweet));
-
-
+console.log('Test Signal:', MTEEBotUtils.getSignal(testTweetTSLong));
 /* TEST 2) parse test tweet, turn into a signal, put an order on alpaca */
-// const signal = MTEEBotUtils.getSignal(testTweet);
-// alpacaSB.buyStock(signal)
-//     .then(r => AlpacaSB.logPurchaseSuccess(signal))
-//     .catch(e => AlpacaSB.logPurchaseError(signal, e));
+const signal1 = MTEEBotUtils.getSignal(testTweetTSLong);
+alpacaSB.buyStock(signal1)
+    .then(r => AlpacaSB.logPurchaseSuccess(signal1))
+    .catch(e => AlpacaSB.logPurchaseError(signal1, e));
+
+/* TEST 3) parse test tweet to turn it into a signal */
+console.log('Test Signal:', MTEEBotUtils.getSignal(testTweetTSShort));
+/* TEST 4) parse test tweet, turn into a signal, put an order on alpaca */
+const signal2 = MTEEBotUtils.getSignal(testTweetTSShort);
+alpacaSB.buyStock(signal2)
+    .then(r => AlpacaSB.logPurchaseSuccess(signal2))
+    .catch(e => AlpacaSB.logPurchaseError(signal2, e));
+
+/* TEST 5) parse test tweet to turn it into a signal */
+console.log('Test Signal:', MTEEBotUtils.getSignal(testTweetSB));
+/* TEST 6) parse test tweet, turn into a signal, put an order on alpaca */
+const signal3 = MTEEBotUtils.getSignal(testTweetSB);
+alpacaSB.buyStock(signal3)
+    .then(r => AlpacaSB.logPurchaseSuccess(signal3))
+    .catch(e => AlpacaSB.logPurchaseError(signal3, e));

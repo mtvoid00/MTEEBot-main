@@ -1,8 +1,8 @@
 export namespace MTEEBot {
     export interface Signal {
         symbol: string;
-        buyPrice: number;
-        sellPrice: number;
+        entryPrice: number;
+        exitPrice: number;
         stopPrice: number;
         side: string; 
     }
@@ -24,9 +24,13 @@ export namespace MTEEBot {
             authorizedSignalsFromUsers: string[];
         };
         alpaca: {
+            accountName: string;
             api: {
                 keyId: string;
                 secretKey: string;
+            }
+            trades: {
+                amountPerTradeInDollars: number;
             }
         };
         MTEEBot: {

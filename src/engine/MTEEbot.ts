@@ -24,38 +24,50 @@ export class MTEEBotUtils {
         return signal;
     }
 
-
     public static parseSignal(tweetText: string = ''): MTEEBot.Signal {
         tweetText = tweetText.toLowerCase();
+        //list all possible terms:
         const buyTerm = 'Now Buying: $'.toLowerCase();
         const shortTerm = 'Now selling short: $'.toLowerCase();
         const buyPriceTerm = 'at ~$'.toLowerCase();
-        const sellTerm = 'Sell Target: $'.toLowerCase();
+        const sellTermTS = 'Sell Target: $'.toLowerCase(); 
+        const sellTermSB = 'Exit Target: $'.toLowerCase();
         const coverTerm = 'Cover Target: $'.toLowerCase();
 
-        if (tweetText.indexOf(buyTerm) >= 0){
-            const symbol = MTEEBotUtils.extractValue(tweetText, buyTerm);
-            const buyPrice = MTEEBotUtils.extractValue(tweetText, buyPriceTerm);
-            const sellPrice = MTEEBotUtils.extractValue(tweetText, sellTerm);            
-            return {
-                symbol: (symbol ?? '').toUpperCase(),
-                buyPrice: parseFloat(buyPrice),
-                sellPrice: parseFloat(sellPrice),
-                stopPrice: parseFloat(buyPrice) - (parseFloat(sellPrice) - parseFloat(buyPrice)),
-                side: 'buy'
-            }
-            } else{
-            const symbol = MTEEBotUtils.extractValue(tweetText, shortTerm);
-            const buyPrice = MTEEBotUtils.extractValue(tweetText, buyPriceTerm);
-            const sellPrice = MTEEBotUtils.extractValue(tweetText, coverTerm);            
-            return {
-                symbol: (symbol ?? '').toUpperCase(),
-                buyPrice: parseFloat(buyPrice),
-                sellPrice: parseFloat(sellPrice),
-                stopPrice: parseFloat(buyPrice) - (parseFloat(sellPrice) - parseFloat(buyPrice)),
-                side: 'sell'
+        let entryTerm: string;
+        let entryPriceTerm: string;
+        let exitTerm: string;
+        let side: string;
+        
+        //determine the relevant terms for the tweet
+        if (tweetText.indexOf(shortTerm) >= 0){ //tweet is for short
+            entryTerm = shortTerm;
+            entryPriceTerm = buyPriceTerm;
+            exitTerm = coverTerm;
+            side = 'sell';
+        }else{
+            entryTerm = buyTerm;
+            entryPriceTerm = buyPriceTerm;
+            side = 'buy';
+            if (tweetText.indexOf(sellTermSB) >= 0){
+                exitTerm = sellTermSB;
+            }else if (tweetText.indexOf(sellTermTS) >= 0){
+                exitTerm = sellTermTS;
+
             }
         }
+    
+        const symbol = MTEEBotUtils.extractValue(tweetText, entryTerm);
+        const entryPrice = MTEEBotUtils.extractValue(tweetText, entryPriceTerm);
+        const exitPrice = MTEEBotUtils.extractValue(tweetText, exitTerm);   
+        console.log('exit price is: ', exitPrice)         
+        return {
+            symbol: (symbol ?? '').toUpperCase(),
+            entryPrice: parseFloat(entryPrice),
+            exitPrice: parseFloat(exitPrice),
+            stopPrice: parseFloat(entryPrice) - (parseFloat(exitPrice) - parseFloat(entryPrice)),
+            side
+        }      
     }
 
     public static extractValue(tweetText: string, term: string) {
