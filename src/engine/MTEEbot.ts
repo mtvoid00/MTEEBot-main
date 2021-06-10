@@ -10,14 +10,16 @@ export class MTEEBotUtils {
         const buyTerm = 'Now Buying: $'.toLowerCase();
         const shortTerm = 'Now selling short: $'.toLowerCase();
         const rtTerm1 = 'RT @TipperBeats'.toLowerCase();
-        //const rtTerm2 = 'RT @r_scalp'.toLowerCase();
+        const rtTerm2 = 'RT @r_scalp'.toLowerCase();
+        const rtTerm3 = 'RT @SwingBot_Small'.toLowerCase();
 
         /**
          * Make sure that the tweet has the "Now Buying: $" text and that it is not a retweet.
          * Don't want to repeat buy on retweets.
          */
         if ((tweetText.indexOf(buyTerm) >= 0 || tweetText.indexOf(shortTerm) >= 0)
-        && tweetText.indexOf(rtTerm1) === -1){ //&& tweetText.indexOf(rtTerm2) === -1) {
+        && tweetText.indexOf(rtTerm1) === -1 && tweetText.indexOf(rtTerm2) === -1
+        && tweetText.indexOf(rtTerm3) === -1){
             console.log("Checking Tweet");
             signal = MTEEBotUtils.parseSignal(tweetText);
         }

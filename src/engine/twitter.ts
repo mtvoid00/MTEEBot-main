@@ -2,6 +2,7 @@ import { MTEEBot } from "../interfaces/MTEEBot.interface";
 
 const Twitter = require('twitter-lite');
 import * as moment from "moment";
+import { AlpacaSB } from "./alpaca";
 
 export class TwitterSB {
     private oneMinuteInMilliseconds = 1000 * 60;
@@ -31,7 +32,7 @@ export class TwitterSB {
         this.keepTwitterAlive();
     }
 
-    private _startListening(onTweetCallback: any) {
+    private _startListening(onTweetCallback: any) {        
         try {
             if (this.stream) {
                 this.stream?.destroy();
@@ -52,6 +53,12 @@ export class TwitterSB {
                 onTweetCallback(tweet)
             })
             .on("ping", () => {
+                const time = moment();
+                if (moment().isAfter(time.hour(22).minute(55))){
+                    console.log('Close to EOD');
+                    let tweet = 'liquidate';
+                    onTweetCallback(tweet);                                        
+                }
                 console.log("...ping Twitter @", moment().format('MMMM Do YYYY, h:mm:ss a'));
                 this.lastTimestamp = Date.now();
             })

@@ -62,6 +62,13 @@ export class AlpacaSB {
         console.log('***********************************')
     }
 
+    public closePositions(){
+        console.log('***********************************')
+        console.log('Closing All Positions')
+        console.log('***********************************')
+        return this.alpaca.closeAllPositions(true);
+    }
+
     private displayAccountInfo() {
         if (this.amountPerTradeInDollars <= 0) {
             console.log('   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
@@ -78,7 +85,7 @@ export class AlpacaSB {
             console.log('   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
             console.log('   $                                                     $');
             console.log(`   $    ALPACA: (${this.MTEEBotSettings.alpaca.accountName})                          $`);
-            console.log(`   $    Trade amount is set to $${this.amountPerTradeInDollars} per trade           $`);
+            console.log(`   $    Trade amount is set to $${this.amountPerTradeInDollars} per trade          $`);
             console.log('   $                                                     $');
             console.log('   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
             console.log('');
