@@ -93,7 +93,7 @@ export class MTEEBotUtils {
         console.log('   *  Welcome to the MTEEBot Trade Execution Engine (MTEEBot)         *');
         console.log('   *                                                                  *')
         console.log('   *         It will listen to Twitter signals from                   *')
-        console.log('   *          the authorizedSignalsFromUsers (in settings.ts)         *');
+        console.log('   *          ${this.MTEEBotSettings.twitter.authorizedSignalsFromUsers} (in settings.ts)         *');
         console.log('   *                                                                  *')
         console.log('   *                                                                  *')
         console.log('   *         And will execute all signals as paper trades on:         *');

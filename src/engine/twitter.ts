@@ -2,7 +2,6 @@ import { MTEEBot } from "../interfaces/MTEEBot.interface";
 
 const Twitter = require('twitter-lite');
 import * as moment from "moment";
-import { AlpacaSB } from "./alpaca";
 
 export class TwitterSB {
     private oneMinuteInMilliseconds = 1000 * 60;
@@ -13,7 +12,7 @@ export class TwitterSB {
     private onTweetCallback: any;
     private keepAliveInterval: NodeJS.Timeout;
 
-    constructor(private MTEEBotSettings: MTEEBot.Settings) {
+    constructor(private MTEEBotSettings: MTEEBot.Settings) {        
         this.client = new Twitter(MTEEBotSettings.twitter.api);
         this.followUsers = MTEEBotSettings.twitter.followUsers;
     }
@@ -44,7 +43,7 @@ export class TwitterSB {
         }
 
         this.stream = this.client.stream("statuses/filter", this.streamParameters)
-            .on("start", response => console.log("...listening on Twitter for buy signal from: ", this.followUsers.map(u => u.name).join(", ")))
+            .on("start", response => console.log("...listening on Twitter for signals from: ", this.followUsers.map(u => u.name).join(", ")))
             .on("data", tweet => {
                 if (this.MTEEBotSettings.MTEEBot.logging === 'verbose') {
                     console.log('---- raw tweet ---')

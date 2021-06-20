@@ -73,6 +73,8 @@ export class AlpacaSB {
         if (this.amountPerTradeInDollars <= 0) {
             console.log('   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             console.log('   !                                                !');
+            console.log('   !      It will listen to Twitter signals from    !')
+            console.log(`   !    (${this.MTEEBotSettings.twitter.authorizedSignalsFromUsers})`);
             console.log(`   !    ALPACA: (${this.MTEEBotSettings.alpaca.accountName})`);
             console.log('   !    ERROR:                                      !');
             console.log('   !    amountPerTradeInDollars in the settings     !');
@@ -84,6 +86,7 @@ export class AlpacaSB {
         } else {
             console.log('   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
             console.log('   $                                                     $');
+            console.log(`   $ (${this.MTEEBotSettings.twitter.authorizedSignalsFromUsers})  $`);
             console.log(`   $    ALPACA: (${this.MTEEBotSettings.alpaca.accountName})                          $`);
             console.log(`   $    Trade amount is set to $${this.amountPerTradeInDollars} per trade          $`);
             console.log('   $                                                     $');
