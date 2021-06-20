@@ -13,7 +13,7 @@ And will execute all signals as paper trades on:
                                                               
 ### This is not a financial advisor. USE AT YOUR OWN RISK.
 #### DISCLAIMER: This software is provided AS IS. It is not responsible for any financial loss or gain. (Unless you win big, then I'll accept a Tesla, Ludicrous+ Mode only...with Warp Speed of course)
-#### This is not affiliated with MTEEBot (independent project)
+#### This is not affiliated with the signal providers (independent project)
 
 ## How to use
 Once you clone this repository run: ``` npm install ``` to install all dependencies
@@ -60,8 +60,10 @@ Once you have all credentials open the ```src/settings.ts``` file and add your c
 
 ## OTHER NOTES
 
+### Since Swingbot went offline (hopefully temporarily), and TipperBeats does not provide a stop loss, we set the stop loss to be equal distance from the entry price to the profit target. This can be modified based on your risk tolerance.
+
 ### Following Signals from one source only
-If you only want to listen to signals from (@r_scalp) or (@SwingBot_Small) individually (but not both) just comment out the user in the ```followUsers``` property in the ```src/settings.ts``` file.
+If you only want to listen to signals from (@r_scalp), (@SwingBot_Small) or (@TipperBeats) individually (but not all) just comment out the user in the ```followUsers``` property in the ```src/settings.ts``` file.
 
 This setup will only follow (and trade) "SwingBot Large Caps" (@r_scalp):
 
@@ -98,7 +100,7 @@ You can follow yourself as well. This is good for testing and making sure the tw
 
 ## Authorize Trades From Yourself
 
-Currently, the only authorized signals are from twitter users (@r_scalp) and (@SwingBot_Small). That is evident in the ```src/settings.ts``` file:
+Currently, the only authorized signals are from twitter users (@r_scalp), (@SwingBot_Small) and (@TipperBeats). That is evident in the ```src/settings.ts``` file:
 
 ```javascript
 {
@@ -122,7 +124,7 @@ You can add yourself to that list (but you also must add yourself to the ```foll
     }
 }
 ```
-Then, as long as you follow the Tweet format from (@r_scalp) and (@SwingBot_Small) you can tweet out:
+Then, as long as you follow the Tweet format from you can tweet out:
 
 ```text
 Now Buying: $CCL at ~$29.51
