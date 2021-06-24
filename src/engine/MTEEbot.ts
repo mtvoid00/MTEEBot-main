@@ -7,14 +7,14 @@ export class MTEEBotUtils {
     public static getSignal(tweetText: string): MTEEBot.Signal {
         let signal: MTEEBot.Signal;
         tweetText = (tweetText ?? '').toLowerCase();
-        const buyTerm = 'Now Buying: $'.toLowerCase();
-        const shortTerm = 'Now selling short: $'.toLowerCase();
+        const buyTerm = 'Trade spotted: Long $'.toLowerCase();
+        const shortTerm = 'Trade spotted: Short $'.toLowerCase();
         const rtTerm1 = 'RT @TipperBeats'.toLowerCase();
         const rtTerm2 = 'RT @r_scalp'.toLowerCase();
         const rtTerm3 = 'RT @SwingBot_Small'.toLowerCase();
 
         /**
-         * Make sure that the tweet has the "Now Buying: $" text and that it is not a retweet.
+         * Make sure that the tweet has the "Trade spotted: Long/Short $" text and that it is not a retweet.
          * Don't want to repeat buy on retweets.
          */
         if ((tweetText.indexOf(buyTerm) >= 0 || tweetText.indexOf(shortTerm) >= 0)
@@ -29,8 +29,8 @@ export class MTEEBotUtils {
     public static parseSignal(tweetText: string = ''): MTEEBot.Signal {
         tweetText = tweetText.toLowerCase();
         //list all possible terms:
-        const buyTerm = 'Now Buying: $'.toLowerCase();
-        const shortTerm = 'Now selling short: $'.toLowerCase();
+        const buyTerm = 'Trade spotted: Long $'.toLowerCase();
+        const shortTerm = 'Trade spotted: Short $'.toLowerCase();
         const buyPriceTerm = 'at ~$'.toLowerCase();
         const sellTermTS = 'Sell Target: $'.toLowerCase(); 
         const sellTermSB = 'Exit Target: $'.toLowerCase();
