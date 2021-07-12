@@ -1,9 +1,7 @@
 # MTEEBot Modular Trade Execution Engine (MTEEBot TEE)
  
                                                               
-It will listen to Twitter signals from:                
- > "SwingBot Large Caps" (@r_scalp)                    
- > "SwingBot Small Caps" (@SwingBot_Small)    
+It will listen to Twitter signals from:                   
  > "Trade Spotter" (@TipperBeats)         
                                                        
                                                        
@@ -12,8 +10,8 @@ And will execute all signals as paper trades on:
                                                        
                                                               
 ### This is not a financial advisor. USE AT YOUR OWN RISK.
-#### DISCLAIMER: This software is provided AS IS. It is not responsible for any financial loss or gain. (Unless you win big, then I'll accept a Tesla, Ludicrous+ Mode only...with Warp Speed of course)
-#### This is not affiliated with the signal providers (independent project)
+#### DISCLAIMER: This software is provided AS IS. It is not responsible for any financial loss or gain. 
+#### This project is independent and not affiliated with the signal provider
 
 ## How to use
 Once you clone this repository run: ``` npm install ``` to install all dependencies
@@ -40,40 +38,43 @@ Once dependencies are installed run: ``` npm start ``` in your terminal
 Once you have all credentials open the ```src/settings.ts``` file and add your credentials:
 
 ```javascript
-{
-    twitter: {
+twitter: {
         api: {
             consumer_key: '--- TWITTER CONSUMER API KEY HERE ---',
             consumer_secret: '--- TWITTER CONSUMER API SECRET HERE ---',
             access_token_key: '--- TWITTER AUTHENTICATION ACCESS TOKEN KEY HERE ---',
             access_token_secret: '--- TWITTER AUTHENTICATION ACCESS TOKEN SECRET HERE --- ',
-        }
+         
+        },
+        followUsers: [           
+            { name: "@TipperBeats", id: "1385168716258742272" },            
+        ],
+        authorizedSignalsFromUsers: ['@TipperBeats'] 
     },
     alpaca: {
+        accountName: 'Paper Account',
         api: {
             keyId: '--- ALPACA API KEY HERE ---',
-            secretKey: '--- ALPACA SECRET KEY HERE ---',
+            secretKey: '--- ALPACA SECRET KEY HERE ---',            
+        },
+        trades: {
+            amountPerTradeInDollars: 10000
         }
-    }
-}
+    },
 ```
+Don't forget to set the amount you want to trade per signal, default is set to $10,000
 
 ## OTHER NOTES
 
-### Since Swingbot went offline (hopefully temporarily), and TipperBeats does not provide a stop loss, we set the stop loss to be equal distance from the entry price to the profit target. This can be modified based on your risk tolerance.
+### Since TipperBeats does not provide a stop loss, rather positions are held until the end of the day we set the stop loss to be equal distance from the entry price to the profit target. This can be modified based on your risk tolerance.
 
-### Following Signals from one source only
-If you only want to listen to signals from (@r_scalp), (@SwingBot_Small) or (@TipperBeats) individually (but not all) just comment out the user in the ```followUsers``` property in the ```src/settings.ts``` file.
-
-This setup will only follow (and trade) "SwingBot Large Caps" (@r_scalp):
+This setup will only follow (and trade) "TradeSpotter" (@Tipperbeats):
 
 ```javascript
 {
     twitter: {
-        followUsers: [
-            { name: "@r_scalp", id: "1379234944652697600" },
-            // { name: "@SwingBot_Small", id: "1388217130709962753" },
-            // { name: "@TipperBeats", id: "1385168716258742272" },
+        followUsers: [            
+            { name: "@TipperBeats", id: "1385168716258742272" },
         ]
     }
 }
@@ -86,9 +87,7 @@ You can follow yourself as well. This is good for testing and making sure the tw
 ```javascript
 {
     twitter: {
-        followUsers: [
-            { name: "@r_scalp", id: "1379234944652697600" },
-            { name: "@SwingBot_Small", id: "1388217130709962753" },
+        followUsers: [           
             { name: "@TipperBeats", id: "1385168716258742272" },	
             { name: "@my-twitter-handle", id: "my-id-number" },
         ]
@@ -100,12 +99,12 @@ You can follow yourself as well. This is good for testing and making sure the tw
 
 ## Authorize Trades From Yourself
 
-Currently, the only authorized signals are from twitter users (@r_scalp), (@SwingBot_Small) and (@TipperBeats). That is evident in the ```src/settings.ts``` file:
+Currently, the only authorized signals are from twitter user @TipperBeats. That is evident in the ```src/settings.ts``` file:
 
 ```javascript
 {
     twitter: {
-        authorizedSignalsFromUsers: ['@r_scalp', '@SwingBot_Small', '@TipperBeats']
+        authorizedSignalsFromUsers: ['@TipperBeats']
     }
 }
 ```
@@ -114,27 +113,15 @@ You can add yourself to that list (but you also must add yourself to the ```foll
 ```javascript
 {
     twitter: {
-        followUsers: [
-            { name: "@r_scalp", id: "1379234944652697600" },
-            { name: "@SwingBot_Small", id: "1388217130709962753" },
+        followUsers: [            
             { name: "@TipperBeats", id: "1385168716258742272" },	
             { name: "@my-twitter-handle", id: "my-id-number" },
         ],
-        authorizedSignalsFromUsers: ['@r_scalp', '@SwingBot_Small', '@my-twitter-handle']
+        authorizedSignalsFromUsers: ['@TipperBeats', '@my-twitter-handle']
     }
 }
 ```
-Then, as long as you follow the Tweet format from you can tweet out:
-
-```text
-Now Buying: $CCL at ~$29.51
-
-Exit Target: $29.96 (Profit: $X.XX (x.xx%))
-
-Stop Loss: $28.92
-```
-
-and the engine will execute your paper trade. This is great for testing and making sure the system is working properly.
+Then, as long as you follow the Tweet format from you can tweet out and the engine will execute your paper trade. This is great for testing and making sure the system is working properly.
 
 > NOTE: You can test and execute trades on Alpaca even when markets are closed. The trade will show up in the order history as ```accepted/held``` and wont be executed until the markets open. You can always go in any time and cancel it yourself manually.
 
